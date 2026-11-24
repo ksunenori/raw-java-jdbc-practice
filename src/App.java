@@ -10,6 +10,8 @@ public class App {
             if (conn != null) {
                 System.out.println("Successfully connected to SQLite.");
                 System.out.println("Connection object: " + conn.getClass().getName());
+                conn.prepareStatement(
+                        "CREATE TABLE IF NOT EXISTS users(id INTERGER PRIMARY KEY, name TEXT, email TEXT);").execute();
             }
         } catch (SQLException e) {
             System.out.println("Database error: " + e.getMessage());
