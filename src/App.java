@@ -1,6 +1,7 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class App {
@@ -13,10 +14,11 @@ public class App {
                 System.out.println("Connection object: " + conn.getClass().getName());
                 conn.prepareStatement(
                         "CREATE TABLE IF NOT EXISTS users(id INTEGER PRIMARY KEY, name TEXT, email TEXT);").execute();
-                PreparedStatement pstmt = conn.prepareStatement("INSERT INTO users (name, email) VALUES (?, ?)");
-                pstmt.setString(1, "Kevin");
-                pstmt.setString(2, "kevin@example.com");
-                pstmt.executeUpdate();
+                ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM users");
+                while (rs.next()) {
+                    System.out.println(rs.getInt("id"));
+                    System.out.println(rs.getString("name"));
+                }
             }
         } catch (SQLException e) {
             System.out.println("Database error: " + e.getMessage());
